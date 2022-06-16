@@ -1,14 +1,15 @@
 import 'dart:async';
+
+import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
-import 'package:bitsdojo_window/bitsdojo_window.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sudoku_solver_generator/sudoku_solver_generator.dart';
-import 'Styles.dart';
+
 import 'Alerts.dart';
-import 'SplashScreenPage.dart';
+import 'Styles.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Styles.primaryColor,
       ),
-      home: SplashScreenPage(),
+      home: HomePage(),
     );
   }
 }
@@ -226,13 +227,13 @@ class HomePageState extends State<HomePage> {
         }
         break;
     }
-    SudokuGenerator generator = new SudokuGenerator(emptySquares: emptySquares);
+    SudokuGenerator generator = SudokuGenerator(emptySquares: emptySquares);
     return [generator.newSudoku, generator.newSudokuSolved];
   }
 
   void setGame(int mode, [String difficulty = 'easy']) {
     if (mode == 1) {
-      game = new List.generate(9, (i) => [0, 0, 0, 0, 0, 0, 0, 0, 0]);
+      game = List.generate(9, (i) => [0, 0, 0, 0, 0, 0, 0, 0, 0]);
       gameCopy = SudokuUtilities.copySudoku(game);
       gameSolved = SudokuUtilities.copySudoku(game);
     } else {
@@ -329,7 +330,7 @@ class HomePageState extends State<HomePage> {
     } else {
       emptyColor = Styles.secondaryColor;
     }
-    List<SizedBox> buttonList = new List<SizedBox>.filled(9, null);
+    List<SizedBox> buttonList = List<SizedBox>.filled(9, null);
     for (var i = 0; i <= 8; i++) {
       var k = timesCalled;
       buttonList[i] = SizedBox(
@@ -399,7 +400,7 @@ class HomePageState extends State<HomePage> {
   }
 
   List<Row> createRows() {
-    List<Row> rowList = new List<Row>.filled(9, null);
+    List<Row> rowList = List<Row>.filled(9, null);
     for (var i = 0; i <= 8; i++) {
       rowList[i] = oneRow();
     }
@@ -549,7 +550,7 @@ class HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return new WillPopScope(
+    return WillPopScope(
         onWillPop: () async {
           if (kIsWeb) {
             return false;
@@ -563,7 +564,7 @@ class HomePageState extends State<HomePage> {
           }
           return true;
         },
-        child: new Scaffold(
+        child: Scaffold(
             backgroundColor: Styles.primaryBackgroundColor,
             appBar: PreferredSize(
                 preferredSize: const Size.fromHeight(56.0),
